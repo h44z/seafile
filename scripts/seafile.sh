@@ -37,6 +37,16 @@ if [[ $# != 1 || ( "$1" != "start" && "$1" != "stop" && "$1" != "restart" ) ]]; 
     exit 1;
 fi
 
+function validate_running_user () {
+    runnig_user=`id -un`
+    data_dir_owner=`stat -c %U ${seafile_data_dir}`
+
+    if [[ "${runnig_user}" != "${data_dir_owner}" ]]; then
+        echo "Error: the user(${runnig_user}) of running the script is not the owner of seafile-data dir, you should using user(${data_dir_owner}) to run the script."
+        exit -1;
+    fi
+}
+
 function validate_ccnet_conf_dir () {
     if [[ ! -d ${default_ccnet_conf_dir} ]]; then
         echo "Error: there is no ccnet config directory."
@@ -111,6 +121,7 @@ function start_seafile_server () {
     validate_central_conf_dir;
     validate_ccnet_conf_dir;
     read_seafile_data_dir;
+    validate_running_user;
     test_config;
 
     echo "Starting seafile server, please wait ..."
