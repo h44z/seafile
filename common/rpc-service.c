@@ -85,8 +85,9 @@ convert_repo (SeafRepo *r)
                   "worktree-invalid", r->worktree_invalid,
                   "last-sync-time", r->last_sync_time,
                   "auto-sync", r->auto_sync,
+                  "uid", userNameFromId (r->uid),
+                  "gid", groupNameFromId (r->gid),
                   NULL);
-
 #endif  /* SEAFILE_SERVER */
 
     return (GObject *)repo;
@@ -274,6 +275,8 @@ seafile_clone (const char *repo_id,
                const char *relay_id,
                const char *repo_name,
                const char *worktree,
+               const char *uid,
+               const char *gid,
                const char *token,
                const char *passwd,
                const char *magic,
@@ -314,6 +317,8 @@ seafile_clone (const char *repo_id,
                                         passwd, magic,
                                         enc_version, random_key,
                                         worktree,
+                                        userIdFromName (uid),
+                                        groupIdFromName (gid),
                                         peer_addr, peer_port,
                                         email, more_info,
                                         error);
@@ -325,6 +330,8 @@ seafile_download (const char *repo_id,
                   const char *relay_id,
                   const char *repo_name,
                   const char *wt_parent,
+                  const char *uid,
+                  const char *gid,
                   const char *token,
                   const char *passwd,
                   const char *magic,
@@ -365,6 +372,8 @@ seafile_download (const char *repo_id,
                                                  passwd, magic,
                                                  enc_version, random_key,
                                                  wt_parent,
+                                                 userIdFromName (uid),
+                                                 groupIdFromName (gid),
                                                  peer_addr, peer_port,
                                                  email, more_info,
                                                  error);
@@ -603,6 +612,8 @@ seafile_get_repo_sync_task (const char *repo_id, GError **error)
                            "force_upload", task->is_manual_sync,
                            "state", sync_state,
                            "error", sync_error_to_str(task->error),
+                           "uid", userNameFromId(task->uid),
+                           "gid", groupNameFromId(task->gid),
                            "repo_id", info->repo_id,
                            NULL);
 

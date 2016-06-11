@@ -300,6 +300,8 @@ seafile_clone (const char *repo_id,
                const char *peer_id,
                const char *repo_name,
                const char *worktree,
+               const char *uid,
+               const char *gid,
                const char *token,
                const char *passwd,
                const char *magic,
@@ -317,6 +319,8 @@ seafile_download (const char *repo_id,
                   const char *peer_id,
                   const char *repo_name,
                   const char *wt_parent,
+                  const char *uid,
+                  const char *gid,
                   const char *token,
                   const char *passwd,
                   const char *magic,
@@ -954,8 +958,8 @@ GList* seafile_get_commit_list_pub (const gchar *repo,
 
 GObject* seafile_get_commit_pub (const gchar *id, GError **error);
 
-char *seafile_diff_pub (const char *repo_id, const char *old, const char *new,
-                        GError **error);
+char *
+seafile_diff_pub (const char *repo_id, const char *old, const char *new, GError **error);
 
 GList * seafile_list_dir_pub (const char *dir_id, GError **error);
 

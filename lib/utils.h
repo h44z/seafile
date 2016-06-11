@@ -101,6 +101,13 @@ seaf_util_rmdir (const char *path);
 int
 seaf_util_mkdir (const char *path, mode_t mode);
 
+
+int
+seaf_util_mkdir_with_parents (const gchar *path, mode_t mode, uid_t uid, gid_t gid);
+
+int
+seaf_util_chown (const char *path, uid_t uid, uid_t gid);
+
 int
 seaf_util_open (const char *path, int flags);
 
@@ -188,11 +195,11 @@ void objstore_get_path (char *path, const char *base, const char *obj_id);
 char** strsplit_by_space (char *string, int *length);
 
 /* Read "n" bytes from a descriptor. */
-ssize_t	readn(int fd, void *vptr, size_t n);
+ssize_t    readn(int fd, void *vptr, size_t n);
 ssize_t writen(int fd, const void *vptr, size_t n);
 
 /* Read "n" bytes from a socket. */
-ssize_t	recvn(evutil_socket_t fd, void *vptr, size_t n);
+ssize_t    recvn(evutil_socket_t fd, void *vptr, size_t n);
 ssize_t sendn(evutil_socket_t fd, const void *vptr, size_t n);
 
 int copy_fd (int ifd, int ofd);
@@ -397,3 +404,14 @@ char*
 format_dir_path (const char *path);
 
 #endif
+
+uid_t userIdFromName (const char *name);
+
+gid_t groupIdFromName (const char *name);
+
+char *userNameFromId (uid_t uid);
+
+char *groupNameFromId (gid_t gid);
+
+
+
