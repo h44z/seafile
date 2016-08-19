@@ -868,7 +868,7 @@ writen(int fd, const void *vptr, size_t n)
 
 
 ssize_t                        /* Read "n" bytes from a descriptor. */
-recvn(int fd, void *vptr, size_t n)
+recvn(evutil_socket_t fd, void *vptr, size_t n)
 {
     size_t    nleft;
     ssize_t    nread;
@@ -897,7 +897,7 @@ recvn(int fd, void *vptr, size_t n)
 }
 
 ssize_t                        /* Write "n" bytes to a descriptor. */
-sendn(int fd, const void *vptr, size_t n)
+sendn(evutil_socket_t fd, const void *vptr, size_t n)
 {
     size_t        nleft;
     ssize_t        nwritten;
@@ -2638,6 +2638,23 @@ format_dir_path (const char *path)
 
     return rpath;
 }
+
+gboolean
+is_empty_string (const char *str)
+{
+    return !str || strcmp (str, "") == 0;
+}
+
+gboolean
+is_permission_valid (const char *perm)
+{
+    if (is_empty_string (perm)) {
+        return FALSE;
+    }
+
+    return strcmp (perm, "r") == 0 || strcmp (perm, "rw") == 0;
+}
+
 uid_t           /* Return UID corresponding to 'name', or process GID */
 userIdFromName (const char *name)
 {
